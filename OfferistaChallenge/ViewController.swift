@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var section1CollectionView: UICollectionView!
@@ -21,6 +21,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let SECTION3_ENTRIES = 9 // Number of Products in Section 1
     var arraySection3 = [Product]() // array to hold all Products of Section 3
+    
+    var section2_entries = 4 // Number of Products in Section 1
+    var arraySection2 = [Product]() // array to hold all Products of Section 3
     
     struct Product {
         var category = ""
@@ -57,16 +60,23 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                             } else
                             
                             // Section 2
-                                if section == 3 {
-                                    for i in 0...(self.SECTION3_ENTRIES-1) {
-                                        self.arraySection3.append(self.jsonToProduct(json: jsonResult[i] as! NSDictionary))
+                                if section == 2 {
+                                    for i in 0...(self.section2_entries-1) {
+                                        self.arraySection2.append(self.jsonToProduct(json: jsonResult[i] as! NSDictionary))
                                     }
                                     DispatchQueue.main.sync(execute: {
-                                        self.section3CollectionView.reloadData()
+                                        self.section2CollectionView.reloadData()
                                     })
-                            }
+                            } else
                             // Section 3
-                            
+                            if section == 3 {
+                                for i in 0...(self.SECTION3_ENTRIES-1) {
+                                    self.arraySection3.append(self.jsonToProduct(json: jsonResult[i] as! NSDictionary))
+                                }
+                                DispatchQueue.main.sync(execute: {
+                                    self.section3CollectionView.reloadData()
+                                })
+                            }
                         } catch {
                             print("JSON Processing Failed")
                         }
@@ -95,7 +105,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Do any additional setup after loading the view, typically from a nib.
         
         downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/1.json", section: 1)
+        downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/2.json", section: 2)
         downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/3.json", section: 3)
+        
+        self.pageControl.currentPage = 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,6 +127,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if (collectionView.tag == 3) { // Section 3
             return SECTION3_ENTRIES
         }
+        if (collectionView.tag == 2) { // Section 3
+            return section2_entries
+        }
         return 1
     }
     
@@ -127,6 +143,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cell.setCategory(category: arraySection1[_index].category)
             cell.setImage(url: arraySection1[_index].imageUrl)
             cell.tag = _index
+            return cell
+        case 2:
+            let cell: Section2CollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! Section2CollectionViewCell
+            if (arraySection2.count >= section2_entries) {
+                let _index = indexPath.row
+                cell.setImage(url: arraySection2[_index].imageUrl)
+                cell.tag = _index
+            }
             return cell
         case 3:
             let cell: Section3CollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! Section3CollectionViewCell
@@ -149,13 +173,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             return cell
         }
     }
-        func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        self.pageControl.currentPage = indexPath.section
-    }
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print(destinationIndexPath)
-        self.pageControl.currentPage = destinationIndexPath.row
-    }
     
+    
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView.tag == 1 {
+            self.pageControl.currentPage = indexPath.row
+        } else {
+            if collectionView.tag == 2 {
+                /*if (indexPath.row >= section2_entries-4) {
+                    downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/2.json", section: 2)
+                }*/
+            }
+        }
+        
+    }
 }
 

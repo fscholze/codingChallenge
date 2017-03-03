@@ -72,28 +72,42 @@
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="E3w-cP-eYB"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="fkv-wI-TXZ"/>
+                                    <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="8fN-DY-EHc"/>
                                 </connections>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cjO-Vx-Nod">
                                 <rect key="frame" x="0.0" y="311" width="375" height="144"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="S46-NM-ctw">
-                                    <size key="itemSize" width="168" height="131"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="S46-NM-ctw">
+                                    <size key="itemSize" width="114" height="114"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="oaB-M5-6aH">
-                                        <rect key="frame" x="0.0" y="0.0" width="168" height="131"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="oaB-M5-6aH" customClass="Section2CollectionViewCell" customModule="OfferistaChallenge" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="15" width="114" height="114"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="168" height="131"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="114" height="114"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xPV-ie-uDE">
+                                                    <rect key="frame" x="15" y="15" width="80" height="80"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
                                         </view>
+                                        <connections>
+                                            <outlet property="image" destination="xPV-ie-uDE" id="duM-yV-1a7"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="uMF-BK-jdE"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="ebU-1e-AnZ"/>
+                                </connections>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="3" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rqz-jb-oPm">
                                 <rect key="frame" x="0.0" y="463" width="375" height="204"/>
