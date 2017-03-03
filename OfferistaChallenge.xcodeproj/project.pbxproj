@@ -14,6 +14,9 @@
 		9BB5188D1E698963008766AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5188B1E698963008766AF /* LaunchScreen.storyboard */; };
 		9BB518981E698963008766AF /* OfferistaChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB518971E698963008766AF /* OfferistaChallengeTests.swift */; };
 		9BB518A31E698963008766AF /* OfferistaChallengeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB518A21E698963008766AF /* OfferistaChallengeUITests.swift */; };
+		9BB518B21E698D0B008766AF /* icon_lupe.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB518B01E698D0B008766AF /* icon_lupe.png */; };
+		9BB518B31E698D0B008766AF /* icon_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB518B11E698D0B008766AF /* icon_menu.png */; };
+		9BB518B51E698E37008766AF /* Section1CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB518B41E698E37008766AF /* Section1CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		9BB5189E1E698963008766AF /* OfferistaChallengeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OfferistaChallengeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BB518A21E698963008766AF /* OfferistaChallengeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferistaChallengeUITests.swift; sourceTree = "<group>"; };
 		9BB518A41E698963008766AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9BB518B01E698D0B008766AF /* icon_lupe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_lupe.png; sourceTree = "<group>"; };
+		9BB518B11E698D0B008766AF /* icon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu.png; sourceTree = "<group>"; };
+		9BB518B41E698E37008766AF /* Section1CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section1CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +106,12 @@
 				9BB518821E698963008766AF /* AppDelegate.swift */,
 				9BB518841E698963008766AF /* ViewController.swift */,
 				9BB518861E698963008766AF /* Main.storyboard */,
+				9BB518B41E698E37008766AF /* Section1CollectionViewCell.swift */,
 				9BB518891E698963008766AF /* Assets.xcassets */,
 				9BB5188B1E698963008766AF /* LaunchScreen.storyboard */,
 				9BB5188E1E698963008766AF /* Info.plist */,
+				9BB518B01E698D0B008766AF /* icon_lupe.png */,
+				9BB518B11E698D0B008766AF /* icon_menu.png */,
 			);
 			path = OfferistaChallenge;
 			sourceTree = "<group>";
@@ -237,6 +246,8 @@
 			files = (
 				9BB5188D1E698963008766AF /* LaunchScreen.storyboard in Resources */,
 				9BB5188A1E698963008766AF /* Assets.xcassets in Resources */,
+				9BB518B31E698D0B008766AF /* icon_menu.png in Resources */,
+				9BB518B21E698D0B008766AF /* icon_lupe.png in Resources */,
 				9BB518881E698963008766AF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BB518B51E698E37008766AF /* Section1CollectionViewCell.swift in Sources */,
 				9BB518851E698963008766AF /* ViewController.swift in Sources */,
 				9BB518831E698963008766AF /* AppDelegate.swift in Sources */,
 			);
