@@ -25,6 +25,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var section2_entries = 4 // Number of Products in Section 1
     var arraySection2 = [Product]() // array to hold all Products of Section 3
     
+    let URL_SECTION_1 = "https://s3-eu-west-1.amazonaws.com/offerista-challenge/1.json"
+    let URL_SECTION_2 = "https://s3-eu-west-1.amazonaws.com/offerista-challenge/2.json"
+    let URL_SECTION_3 = "https://s3-eu-west-1.amazonaws.com/offerista-challenge/3.json"
+    
     struct Product {
         var category = ""
         var title = ""
@@ -104,9 +108,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/1.json", section: 1)
-        downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/2.json", section: 2)
-        downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/3.json", section: 3)
+        downloadData(url: URL_SECTION_1, section: 1)
+        downloadData(url: URL_SECTION_2, section: 2)
+        downloadData(url: URL_SECTION_3, section: 3)
         
         self.pageControl.currentPage = 0
     }
@@ -175,7 +179,48 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     
-    
+    func downloadMoreForSection2(lastEntryIndex: Int) {
+        self.section2_entries += 5
+        if let _url = URL(string: URL_SECTION_2) {
+            
+            let request = NSMutableURLRequest(url: _url)
+            
+            // Task wird defintiert
+            let task = URLSession.shared.dataTask(with: request as URLRequest) {
+                data, response, error in
+                if error != nil {
+                    print(error)
+                } else {
+                    if let unwrappedData = data {
+                        do {
+                            let jsonResult = try JSONSerialization.jsonObject(with: unwrappedData, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
+                            for i in lastEntryIndex...(self.section2_entries-1) {
+                                if (i<jsonResult.count) {
+                                    if let dict = jsonResult[i] as? NSDictionary {
+                                        self.arraySection2.append(self.jsonToProduct(json: dict))
+                                    } else {
+                                        self.section2_entries = i
+                                        return
+                                    }
+                                } else {
+                                    self.section2_entries = i
+                                    return
+                                }
+                                
+                            }
+                            DispatchQueue.main.sync(execute: {
+                                self.section2CollectionView.reloadData()
+                            })
+                        } catch {
+                            print("JSON Processing Failed")
+                        }
+                    }
+                }
+            }
+            // task wird gestartet
+            task.resume()
+        }
+    }
     
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -183,9 +228,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.pageControl.currentPage = indexPath.row
         } else {
             if collectionView.tag == 2 {
-                /*if (indexPath.row >= section2_entries-4) {
-                    downloadData(url: "https://s3-eu-west-1.amazonaws.com/offerista-challenge/2.json", section: 2)
-                }*/
+                if (indexPath.row >= section2_entries-4) {
+                    downloadMoreForSection2(lastEntryIndex: section2_entries)
+                }
             }
         }
         
