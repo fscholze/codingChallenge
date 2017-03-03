@@ -15,10 +15,7 @@ class Section2CollectionViewCell: UICollectionViewCell {
     func setImage(url: String) {
         if let _url = URL(string: url) {
             
-            //createSpinner()
-            
             let request = NSMutableURLRequest(url: _url)
-            
             
             let task = URLSession.shared.dataTask(with: request as URLRequest) {
                 data, response, error in
@@ -37,10 +34,9 @@ class Section2CollectionViewCell: UICollectionViewCell {
                     }
                 }
             }
-            // task wird gestartet
+            // start task
             task.resume()
         }
-        //self.activityIndicator.stopAnimating()
     }
 
 }

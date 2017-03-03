@@ -13,8 +13,6 @@ class Section1CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelCategory: UILabel!
     
-    //var activityIndicator = UIActivityIndicatorView()
-    
     func setTitel(title: String) {
         self.labelTitle.text = title
     }
@@ -26,10 +24,7 @@ class Section1CollectionViewCell: UICollectionViewCell {
     func setImage(url: String) {
         if let _url = URL(string: url) {
             
-            //createSpinner()
-            
             let request = NSMutableURLRequest(url: _url)
-            
             
             let task = URLSession.shared.dataTask(with: request as URLRequest) {
                 data, response, error in
@@ -48,19 +43,9 @@ class Section1CollectionViewCell: UICollectionViewCell {
                     }
                 }
             }
-            // task wird gestartet
+            // start task
             task.resume()
         }
-        //self.activityIndicator.stopAnimating()
     }
-    
-   /* func createSpinner() {
-        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y:0, width: 50, height: 50))
-        activityIndicator.center = self.image.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        Section1CollectionViewCell. addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-    }*/
     
 }

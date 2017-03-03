@@ -29,6 +29,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     let URL_SECTION_2 = "https://s3-eu-west-1.amazonaws.com/offerista-challenge/2.json"
     let URL_SECTION_3 = "https://s3-eu-west-1.amazonaws.com/offerista-challenge/3.json"
     
+    var currentProductTitle = ""
+    
     struct Product {
         var category = ""
         var title = ""
@@ -38,7 +40,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func downloadData(url: String, section: Int) {
-        // Daten werden von einer website or php Script runtergeladen
+        // Download Data
         if let _url = URL(string: url) {
             
             let request = NSMutableURLRequest(url: _url)
@@ -88,7 +90,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     }
                 }
             }
-            // task wird gestartet
+            // start task
             task.resume()
         }
     }
@@ -143,10 +145,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         case 1:
             let cell: Section1CollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! Section1CollectionViewCell
             let _index = indexPath.row
-            cell.setTitel(title: arraySection1[_index].title)
-            cell.setCategory(category: arraySection1[_index].category)
-            cell.setImage(url: arraySection1[_index].imageUrl)
-            cell.tag = _index
+            if (arraySection1.count >= SECTION1_ENTRIES) {
+                cell.setTitel(title: arraySection1[_index].title)
+                cell.setCategory(category: arraySection1[_index].category)
+                cell.setImage(url: arraySection1[_index].imageUrl)
+                cell.tag = _index
+            }
             return cell
         case 2:
             let cell: Section2CollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! Section2CollectionViewCell
@@ -224,16 +228,39 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView.tag == 1 {
+        if collectionView.tag == 1 { // if Section 1, then change page controller
             self.pageControl.currentPage = indexPath.row
         } else {
-            if collectionView.tag == 2 {
+            if collectionView.tag == 2 { // if section 2, then download more images
                 if (indexPath.row >= section2_entries-4) {
                     downloadMoreForSection2(lastEntryIndex: section2_entries)
                 }
             }
         }
-        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var _product = Product()
+        switch collectionView.tag {
+        case 1: // Section 1
+            _product = arraySection1[indexPath.row]
+        case 2: // Section 2
+            _product = arraySection2[indexPath.row]
+        case 3: // Section 3
+            _product = arraySection3[indexPath.row]
+        default:
+            return
+        }
+        currentProductTitle = _product.title
+        performSegue(withIdentifier: "showProduct", sender: self)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showProduct" {
+            let secondViewController = segue.destination as! DetailViewController
+            secondViewController.productTitle = currentProductTitle
+        }
     }
 }
 
